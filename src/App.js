@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function sayAge(target, name, descriptor) {
+  let sayName = descriptor.value;
+  descriptor.value = function() {
+    sayName.apply(this);
+    console.log('age: 12');
+  }
+}
+
+class Cat {
+  name = 'vince'
+  @sayAge
+  sayName() {
+    console.log(this.name)
+  }
+}
+
+class App extends React.Component {
+  componentDidMount() {
+    let catA = new Cat();
+    catA.sayName();
+  }
+  render() {
+    return (
+      <div>es7 装饰器</div>
+    )
+  }
 }
 
 export default App;
